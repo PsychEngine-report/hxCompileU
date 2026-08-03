@@ -3,7 +3,6 @@
 // This software is licensed under the MIT License.
 // See the LICENSE file for more details.
 
-
 package src.utils;
 
 import sys.net.Host;
@@ -20,8 +19,7 @@ using StringTools;
 
 /**
  * A UDP server that listens for messages from the Wii U.
- * 
- * Author: Slushi.
+ * * Author: Slushi.
  */
 class UDPListener {
 
@@ -31,16 +29,16 @@ class UDPListener {
 	 * Starts the UDP listener.
 	 */
 	public static function start(?arg1:String):Void {
-		if (arg1 != null || arg1 != "") {
+		if (arg1 != null && arg1 != "") {
 			getPortFromLib(arg1);
 		}
 		var udpIp = "0.0.0.0";
 		var udpPort:Int = UDP_PORT;
 		var address:Address = new Address();
-        var host = new Host(udpIp);
+		var host = new Host(udpIp);
 
 		address.host = host.ip;
-        address.port = UDP_PORT;
+		address.port = UDP_PORT;
 
 		var socket = new UdpSocket();
 
@@ -50,7 +48,7 @@ class UDPListener {
 			SlushiUtils.printMsg('------------------', NONE);
 
 			while (true) {
-                var arrayData = new Array<cpp.UInt8>();
+				var arrayData = new Array<cpp.UInt8>();
 				var data:Bytes = Bytes.alloc(1024);
 				var address = socket.readFrom(data, 0, 1024, address);
 
@@ -68,8 +66,8 @@ class UDPListener {
 		}
 
 		SlushiUtils.printMsg('------------------', NONE);
-        socket.close();
-        SlushiUtils.printMsg('Socket closed', INFO);
+		socket.close();
+		SlushiUtils.printMsg('Socket closed', INFO);
 	}
 
 	/**
@@ -80,8 +78,9 @@ class UDPListener {
 		var mainPath:String = "";
 		var haxelibPath:String = Sys.getEnv("HAXEPATH") + "/lib";
 
-		if (FileSystem.exists(SlushiUtils.getPathFromCurrentTerminal() + "/.haxelib")) {
-			mainPath = SlushiUtils.getPathFromCurrentTerminal() + "/.haxelib";
+		var localHaxelib = SlushiUtils.getPathFromCurrentTerminal() + "/.haxelib";
+		if (FileSystem.exists(localHaxelib)) {
+			mainPath = localHaxelib;
 		} else {
 			mainPath = haxelibPath;
 		}
@@ -93,14 +92,23 @@ class UDPListener {
 
 		try {
 			var hxuConfigPath:String = "";
-			var currentFile:String = File.getContent(mainPath + "/" + lib + "/.current");
-			if (currentFile == "git") {
-				hxuConfigPath = mainPath + "/" + lib + "/git/HxCU_Meta.json";
+			var currentFilePath = mainPath + "/" + lib + "/.current";
+			
+			if (FileSystem.exists(currentFilePath)) {
+				var currentFile:String = File.getContent(currentFilePath).trim();
+				if (currentFile == "git") {
+					hxuConfigPath = mainPath + "/" + lib + "/git/HxCU_Meta.json";
+				} else {
+					hxuConfigPath = mainPath + "/" + lib + "/" + currentFile.replace(".", ",") + "/HxCU_Meta.json";
+				}
 			} else {
-				hxuConfigPath = mainPath + "/" + lib + "/" + currentFile.replace(".", ",") + "/HxCU_Meta.json";
+				// Fallback if .current doesn't exist, check git or common folders
+				if (FileSystem.exists(mainPath + "/" + lib + "/git/HxCU_Meta.json")) {
+					hxuConfigPath = mainPath + "/" + lib + "/git/HxCU_Meta.json";
+				}
 			}
 
-			if (!FileSystem.exists(hxuConfigPath)) {
+			if (hxuConfigPath == "" || !FileSystem.exists(hxuConfigPath)) {
 				SlushiUtils.printMsg("HxCU_Meta.json not found in [" + lib + "]", WARN);
 				return;
 			}
@@ -108,15 +116,11 @@ class UDPListener {
 			var fileContent = File.getContent(hxuConfigPath);
 			var jsonContent:Dynamic = Json.parse(fileContent);
 
-			if (jsonContent.customUDPPort != null) {
-				UDP_PORT = jsonContent.customUDPPort;
+			if (jsonContent.customUDPPort != null && Std.string(jsonContent.customUDPPort) != "") {
+				UDP_PORT = Std.parseInt(jsonContent.customUDPPort);
 				SlushiUtils.printMsg("UDP Port set to [" + UDP_PORT + "] from [" + lib + "]", INFO);
-			} else {
-				SlushiUtils.printMsg("customUDPPort not found in [" + lib + "]", WARN);
 			}
-
 		} catch (e) {
-			SlushiUtils.printMsg("Error parsing [HxCU_Meta.json]: " + e, ERROR);
 			return;
 		}
 	}
