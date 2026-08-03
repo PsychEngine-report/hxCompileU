@@ -70,8 +70,9 @@ class LibsManager {
 		var mainPath:String = "";
 		var haxelibPath:String = Sys.getEnv("HAXEPATH") + "/lib";
 
-		if (FileSystem.exists(SlushiUtils.getPathFromCurrentTerminal() + ".haxelib")) {
-			mainPath = SlushiUtils.getPathFromCurrentTerminal() + ".haxelib";
+		var localHaxelib = SlushiUtils.getPathFromCurrentTerminal() + "/.haxelib";
+		if (FileSystem.exists(localHaxelib)) {
+			mainPath = localHaxelib;
 		} else {
 			mainPath = haxelibPath;
 		}
