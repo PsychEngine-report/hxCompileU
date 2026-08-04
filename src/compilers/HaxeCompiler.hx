@@ -92,6 +92,7 @@ class HaxeCompiler {
 	-D cxx_callstack
 	-D wiiu
 	-D cafe
+	-D target.threaded
 	-D lime_use_old_deltatime=1
 	############################
 	# Extra defines
