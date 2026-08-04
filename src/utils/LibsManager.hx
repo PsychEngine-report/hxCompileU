@@ -163,14 +163,12 @@ class LibsManager {
 		var libs:Array<String> = [];
 
 		for (i in 0...MainCompiler.libs.length) {
-			if (MainCompiler.libs[i].libJSONData.haxeLibs.length == 0) {
-				continue;
-			}
-
 			libs.push("-lib " + MainCompiler.libs[i].hxLibName);
 
-			for (lib in MainCompiler.libs[i].libJSONData.haxeLibs) {
-				libs.push("-lib " + lib);
+			if (MainCompiler.libs[i].libJSONData.haxeLibs != null) {
+				for (lib in MainCompiler.libs[i].libJSONData.haxeLibs) {
+					libs.push("-lib " + lib);
+				}
 			}
 		}
 
