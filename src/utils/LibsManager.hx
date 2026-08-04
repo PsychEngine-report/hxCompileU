@@ -99,30 +99,42 @@ class LibsManager {
 			} else {
 				metaPath = libFolder + "/" + versionFolder + "/" + jsonName;
 			}
-			if (!FileSystem.exists(metaPath)) {
-				SlushiUtils.printMsg("Meta file [" + metaPath + "] not found for lib [" + libName + "]", WARN);
-				return;
+
+			var jsonContent:Dynamic = {
+				libVersion: "1.0.0",
+				customUDPPort: "",
+				haxeLibs: [],
+				wiiuLibs: [],
+				mainDefines: [],
+				cDefines: [],
+				cppDefines: []
+			};
+
+			if (FileSystem.exists(metaPath)) {
+				try {
+					var fileContent = File.getContent(metaPath);
+					jsonContent = Json.parse(fileContent);
+				} catch (e) {
+					SlushiUtils.printMsg("Error loading [" + metaPath + "]: " + e, ERROR);
+				}
+			} else {
+				SlushiUtils.printMsg("Meta file not found for [" + libName + "], using default config.", WARN);
 			}
-			try {
-				var fileContent = File.getContent(metaPath);
-				var jsonContent:Dynamic = Json.parse(fileContent);
 
-				// SlushiUtils.printMsg("LIB CONTENT:\n" + "libVersion: " + jsonContent.libVersion + "\nhaxeLibs: " + jsonContent.haxeLibs + "\nwiiuLibs: " + jsonContent.wiiuLibs + "\nmainDefines: " + jsonContent.mainDefines + "\n", DEBUG);
+			libs.push({
+				libJSONData: {
+					libVersion: jsonContent.libVersion,
+					customUDPPort: jsonContent.customUDPPort,
+					haxeLibs: jsonContent.haxeLibs,
+					wiiuLibs: jsonContent.wiiuLibs,
+					mainDefines: jsonContent.mainDefines,
+					cDefines: jsonContent.cDefines,
+					cppDefines: jsonContent.cppDefines
+				},
+				hxLibName: libName,
+			});
 
-				libs.push({
-					libJSONData: {
-						libVersion: jsonContent.libVersion,
-						customUDPPort: jsonContent.customUDPPort,
-						haxeLibs: jsonContent.haxeLibs,
-						wiiuLibs: jsonContent.wiiuLibs,
-						mainDefines: jsonContent.mainDefines,
-						cDefines: jsonContent.cDefines,
-						cppDefines: jsonContent.cppDefines
-					},
-					hxLibName: libName,
-				});
-
-				// Recursively process extra haxeLibs
+			if (Reflect.hasField(jsonContent, "haxeLibs") && jsonContent.haxeLibs != null) {
 				var jsonExtraLibs:Array<String> = jsonContent.haxeLibs;
 				for (extraLib in jsonExtraLibs) {
 					var extraLibName = extraLib;
