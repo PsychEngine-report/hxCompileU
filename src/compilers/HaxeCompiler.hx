@@ -92,7 +92,7 @@ class HaxeCompiler {
 	-D cxx_callstack
 	-D wiiu
 	-D cafe
-	--remap sys.thread:dummy.sys.thread
+	--macro haxe.macro.Compiler.allowPackage("sys")
 	-D lime_use_old_deltatime=1
 	############################
 	# Extra defines
