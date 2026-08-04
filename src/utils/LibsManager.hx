@@ -3,7 +3,6 @@
 // This software is licensed under the MIT License.
 // See the LICENSE file for more details.
 
-
 package src.utils;
 
 import haxe.Json;
@@ -44,13 +43,6 @@ typedef HxCULibStruct = {
 /**
  * The LibsManager class is used to manage the libs of the project, it will
  * parse check the libs in the JSON file and return the required libs for the project.
- *
- * This was much easier than the first version of the HxCompileU library manager, now 
- * there are no longer only a few libraries allowed per compiler version, they can
- * now be as many as the user needs.
- * In addition to searching for each Haxe library, if a library 
- * requires additional Haxe libraries, the compiler will search for them and if 
- * they exist, it will import the necessary data (like more Haxe libraries or the C++ libraries for the Wii U).
  *
  * Author: Slushi.
  */
@@ -121,33 +113,35 @@ class LibsManager {
 				SlushiUtils.printMsg("Meta file not found for [" + libName + "], using default config.", WARN);
 			}
 
-			libs.push({
-				libJSONData: {
-					libVersion: jsonContent.libVersion,
-					customUDPPort: jsonContent.customUDPPort,
-					haxeLibs: jsonContent.haxeLibs,
-					wiiuLibs: jsonContent.wiiuLibs,
-					mainDefines: jsonContent.mainDefines,
-					cDefines: jsonContent.cDefines,
-					cppDefines: jsonContent.cppDefines
-				},
-				hxLibName: libName,
-			});
+			try {
+				libs.push({
+					libJSONData: {
+						libVersion: jsonContent.libVersion,
+						customUDPPort: jsonContent.customUDPPort,
+						haxeLibs: jsonContent.haxeLibs,
+						wiiuLibs: jsonContent.wiiuLibs,
+						mainDefines: jsonContent.mainDefines,
+						cDefines: jsonContent.cDefines,
+						cppDefines: jsonContent.cppDefines
+					},
+					hxLibName: libName,
+				});
 
-			if (Reflect.hasField(jsonContent, "haxeLibs") && jsonContent.haxeLibs != null) {
-				var jsonExtraLibs:Array<String> = jsonContent.haxeLibs;
-				for (extraLib in jsonExtraLibs) {
-					var extraLibName = extraLib;
-					var extraLibVersion:String = null;
-					if (extraLib.indexOf(":") != -1) {
-						var parts = extraLib.split(":");
-						extraLibName = parts[0];
-						extraLibVersion = parts[1];
+				if (Reflect.hasField(jsonContent, "haxeLibs") && jsonContent.haxeLibs != null) {
+					var jsonExtraLibs:Array<String> = jsonContent.haxeLibs;
+					for (extraLib in jsonExtraLibs) {
+						var extraLibName = extraLib;
+						var extraLibVersion:String = null;
+						if (extraLib.indexOf(":") != -1) {
+							var parts = extraLib.split(":");
+							extraLibName = parts[0];
+							extraLibVersion = parts[1];
+						}
+						processLib(extraLibName, extraLibVersion);
 					}
-					processLib(extraLibName, extraLibVersion);
 				}
 			} catch (e) {
-				SlushiUtils.printMsg("Error loading [" + metaPath + "]: " + e, ERROR);
+				SlushiUtils.printMsg("Error processing lib [" + libName + "]: " + e, ERROR);
 				return;
 			}
 		}
@@ -187,9 +181,6 @@ class LibsManager {
 		var libs:Array<String> = [];
 
 		for (i in 0...MainCompiler.libs.length) {
-
-			// SlushiUtils.printMsg("CPP Lib:" + MainCompiler.libs[i].libJSONData.wiiuLibs, DEBUG);
-
 			if (MainCompiler.libs[i].libJSONData.wiiuLibs.length <= 0) {
 				continue;
 			}
@@ -198,8 +189,6 @@ class LibsManager {
 				libs.push("-l" + lib);
 			}
 		}
-
-		// SlushiUtils.printMsg("FINAL CPP Libs:" + libs, DEBUG);
 
 		return libs;
 	}
