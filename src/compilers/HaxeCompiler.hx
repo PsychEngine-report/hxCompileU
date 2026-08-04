@@ -92,7 +92,7 @@ class HaxeCompiler {
 	-D cxx_callstack
 	-D wiiu
 	-D cafe
-	--macro hxCompileUMacros.HXCU_MACRO.macroInit()
+	--remap sys.thread:dummy.sys.thread
 	-D lime_use_old_deltatime=1
 	############################
 	# Extra defines
