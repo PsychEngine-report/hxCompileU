@@ -92,7 +92,7 @@ class HaxeCompiler {
 	-D cxx_callstack
 	-D wiiu
 	-D cafe
-	--macro exclude("sys.thread.Deque")
+	--macro exclude("sys.thread")
 	-D lime_use_old_deltatime=1
 	############################
 	# Extra defines
