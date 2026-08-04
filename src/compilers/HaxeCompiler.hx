@@ -83,6 +83,7 @@ class HaxeCompiler {
 	-D keep-unused-locals
 	-D keep-useless-exprs
 	-D cxx_callstack
+	-D lime_use_old_deltatime=1
 	############################
 	# Extra Haxe Libraries
 	${finalHxLibs()}
