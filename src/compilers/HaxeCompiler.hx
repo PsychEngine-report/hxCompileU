@@ -74,8 +74,8 @@ class HaxeCompiler {
 	-main ${jsonFile.haxeConfig.hxMain}
 	-D message.reporting=${reportStyle}
 	# Explicit paths for Reflaxe source targets #########
-	-cp .haxelib/reflaxe.cpp/git/src
-	-cp .haxelib/reflaxe.cpp/git/Std
+	-cp .haxelib/reflaxe,cpp/git/src
+	-cp .haxelib/reflaxe,cpp/git/Std
 	-cp .haxelib/reflaxe.cpp/git/src
 	# Default and required libraries #########
 	-lib reflaxe
