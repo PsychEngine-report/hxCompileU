@@ -89,6 +89,11 @@ class HaxeCompiler {
 	-D wiiu
 	-D cafe
 	-D macro-times
+	-D ConstCharPtr = String
+	-D UInt32 = Int
+	-D UInt16 = Int
+	-D Int32 = Int
+	-D Int64 = haxe.Int64
 	--macro haxe.macro.Compiler.allowPackage("sys")
 	--macro include("GlobalTypes")
 	############################
