@@ -73,16 +73,12 @@ class HaxeCompiler {
 	-cp ${jsonFile.haxeConfig.sourceDir}
 	-main ${jsonFile.haxeConfig.hxMain}
 	-D message.reporting=${reportStyle}
-	# Explicit paths for Reflaxe source targets #########
-	-cp .haxelib/reflaxe,cpp/git/src
-	-cp .haxelib/reflaxe,cpp/git/Std
-	-cp .haxelib/reflaxe.cpp/git/src
 	# Default and required libraries #########
+	-cp .haxelib/reflaxe,cpp/git/src
+    -cp .haxelib/reflaxe,cpp/git/Std
 	-lib reflaxe
 	-lib reflaxe.cpp
 	-lib hxu_wut
-	# Extra Haxe Libraries
-	${finalHxLibs()}
 	# Reflaxe/C++ parameters #########
 	-D cpp-output=${jsonFile.haxeConfig.outDir}
 	-D mainClass=${jsonFile.haxeConfig.hxMain}
@@ -92,9 +88,11 @@ class HaxeCompiler {
 	-D cxx_callstack
 	-D wiiu
 	-D cafe
+	-D macro-times
 	--macro haxe.macro.Compiler.allowPackage("sys")
-	-D lime_use_old_deltatime=1
 	############################
+	# Extra Haxe Libraries
+	${finalHxLibs()}
 	# Extra defines
 	${finalHxDefines()}
 	# Extra options
