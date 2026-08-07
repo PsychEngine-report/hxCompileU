@@ -81,7 +81,7 @@ class HaxeCompiler {
 	-D message.reporting=${reportStyle}
 	# Default and required libraries #########
 	-cp ${basePath}.haxelib/reflaxe,cpp/git/src
-	-cp ${basePath}.haxelib/reflaxe,cpp/git/Std
+	-cp ${basePath}.haxelib/reflaxe,cpp/git/std
 	-lib reflaxe
 	-lib reflaxe.cpp
 	-lib hxu_wut
