@@ -90,6 +90,7 @@ class HaxeCompiler {
 	-D cafe
 	-D macro-times
 	--macro haxe.macro.Compiler.allowPackage("sys")
+	--macro include("GlobalTypes")
 	############################
 	# Extra Haxe Libraries
 	${finalHxLibs()}
