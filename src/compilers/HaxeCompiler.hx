@@ -74,8 +74,8 @@ class HaxeCompiler {
 	-main ${jsonFile.haxeConfig.hxMain}
 	-D message.reporting=${reportStyle}
 	# Default and required libraries #########
-	-cp ${System.getEnv("GITHUB_WORKSPACE") != null ? System.getEnv("GITHUB_WORKSPACE") + "/.haxelib/reflaxe,cpp/git/src" : ".haxelib/reflaxe,cpp/git/src"}
-	-cp ${System.getEnv("GITHUB_WORKSPACE") != null ? System.getEnv("GITHUB_WORKSPACE") + "/.haxelib/reflaxe,cpp/git/Std" : ".haxelib/reflaxe,cpp/git/Std"}
+	-cp ${Sys.getEnv("GITHUB_WORKSPACE") != null ? Sys.getEnv("GITHUB_WORKSPACE") + "/.haxelib/reflaxe,cpp/git/src" : ".haxelib/reflaxe,cpp/git/src"}
+	-cp ${Sys.getEnv("GITHUB_WORKSPACE") != null ? Sys.getEnv("GITHUB_WORKSPACE") + "/.haxelib/reflaxe,cpp/git/Std" : ".haxelib/reflaxe,cpp/git/Std"}
 	-lib reflaxe
 	-lib reflaxe.cpp
 	-lib hxu_wut
