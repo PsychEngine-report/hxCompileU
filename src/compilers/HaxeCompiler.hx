@@ -80,13 +80,6 @@ class HaxeCompiler {
 	-lib reflaxe
 	-lib reflaxe.cpp
 	-lib hxu_wut
-	-cp .haxelib/reflaxe,cpp/git/src
-	-cp .haxelib/reflaxe/git/src
-	# Global type mapping fallbacks for external headers
-	-D ConstCharPtr = cxx.ConstCharPtr
-	-D UInt32 = Int
-	-D UInt16 = Int
-	-D Int32 = Int
 	# Reflaxe/C++ parameters #########
 	-D cpp-output=${jsonFile.haxeConfig.outDir}
 	-D mainClass=${jsonFile.haxeConfig.hxMain}
