@@ -74,8 +74,8 @@ class HaxeCompiler {
 	-main ${jsonFile.haxeConfig.hxMain}
 	-D message.reporting=${reportStyle}
 	# Default and required libraries #########
-	-cp .haxelib/reflaxe,cpp/git/src
-    -cp .haxelib/reflaxe,cpp/git/Std
+	-cp ${System.getEnv("GITHUB_WORKSPACE") != null ? System.getEnv("GITHUB_WORKSPACE") + "/.haxelib/reflaxe,cpp/git/src" : ".haxelib/reflaxe,cpp/git/src"}
+	-cp ${System.getEnv("GITHUB_WORKSPACE") != null ? System.getEnv("GITHUB_WORKSPACE") + "/.haxelib/reflaxe,cpp/git/Std" : ".haxelib/reflaxe,cpp/git/Std"
 	-lib reflaxe
 	-lib reflaxe.cpp
 	-lib hxu_wut
@@ -88,12 +88,6 @@ class HaxeCompiler {
 	-D cxx_callstack
 	-D wiiu
 	-D cafe
-	-D macro-times
-	-D ConstCharPtr = String
-	-D UInt32 = Int
-	-D UInt16 = Int
-	-D Int32 = Int
-	-D Int64 = haxe.Int64
 	--macro haxe.macro.Compiler.allowPackage("sys")
 	--macro include("GlobalTypes")
 	############################
