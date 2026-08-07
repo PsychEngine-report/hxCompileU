@@ -74,6 +74,8 @@ class HaxeCompiler {
 	-main ${jsonFile.haxeConfig.hxMain}
 	-D message.reporting=${reportStyle}
 	# Default and required libraries #########
+	-cp .haxelib/reflaxe,cpp/git/src
+	-cp .haxelib/reflaxe/git/src
 	-lib reflaxe.cpp
 	-lib hxu_wut
 	# Reflaxe/C++ parameters #########
