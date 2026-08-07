@@ -73,6 +73,8 @@ class HaxeCompiler {
 	-cp ${jsonFile.haxeConfig.sourceDir}
 	-main ${jsonFile.haxeConfig.hxMain}
 	-D message.reporting=${reportStyle}
+	-dce no
+	-D no-opt
 	# Default and required libraries #########
 	-cp .haxelib/reflaxe,cpp/git/src
 	-cp .haxelib/reflaxe/git/src
@@ -88,10 +90,6 @@ class HaxeCompiler {
 	-D wiiu
 	-D cafe
 	--macro haxe.macro.Compiler.allowPackage("sys")
-	-D ConstCharPtr = cxx.ConstCharPtr
-	-D UInt32 = Int
-	-D UInt16 = Int
-	-D Int32 = Int
 	--macro include("GlobalTypes")
 	############################
 	# Extra Haxe Libraries
