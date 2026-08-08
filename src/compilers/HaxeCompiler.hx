@@ -84,6 +84,7 @@ class HaxeCompiler {
 	-D cpp-output=${jsonFile.haxeConfig.outDir}
 	-D mainClass=${jsonFile.haxeConfig.hxMain}
 	-D cxx-no-null-warnings
+	-D cxx_callstack
 	-D keep-unused-locals
 	-D keep-useless-exprs
 	-D wiiu
