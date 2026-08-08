@@ -15,6 +15,7 @@ import src.SlushiUtils;
 import haxe.Resource;
 import src.Main;
 import src.utils.Defines;
+#include "haxe_NativeStackTrace.h"
 
 using StringTools;
 
