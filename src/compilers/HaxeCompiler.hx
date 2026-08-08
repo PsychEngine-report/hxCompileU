@@ -80,6 +80,8 @@ class HaxeCompiler {
 	-lib reflaxe
 	-lib reflaxe.cpp
 	-lib hxu_wut
+	# Extra Haxe Libraries
+	${finalHxLibs()}
 	# Reflaxe/C++ parameters #########
 	-D cpp-output=${jsonFile.haxeConfig.outDir}
 	-D mainClass=${jsonFile.haxeConfig.hxMain}
