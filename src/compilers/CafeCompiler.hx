@@ -25,7 +25,6 @@ using StringTools;
  * 
  * Author: Slushi.
  */
-@:headerInclude("haxe_NativeStackTrace.h", true)
 class CafeCompiler {
 	static var jsonFile:JsonStruct = JsonFile.getJson();
 	static var exitCodeNum:Int = 0;
