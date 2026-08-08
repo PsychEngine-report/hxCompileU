@@ -74,8 +74,6 @@ class HaxeCompiler {
 	-cp ${jsonFile.haxeConfig.sourceDir}
 	-main ${jsonFile.haxeConfig.hxMain}
 	-D message.reporting=${reportStyle}
-	-dce no
-	-D no-opt
 	# Default and required libraries #########
 	-lib reflaxe
 	-lib reflaxe.cpp
@@ -88,9 +86,11 @@ class HaxeCompiler {
 	-D cxx-no-null-warnings
 	-D keep-unused-locals
 	-D keep-useless-exprs
-	-D cxx_callstack
+  # -D cxx_callstack
 	-D wiiu
 	-D cafe
+	-dce no
+	-D no-opt
 	--macro haxe.macro.Compiler.allowPackage("sys")
 	############################
 	# Extra Haxe Libraries
