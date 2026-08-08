@@ -176,7 +176,7 @@ class CafeCompiler {
 		}
 
 		if (jsonFile.wiiuConfig.convertToWUHB == true) {
-			defines.c += "-D WUHB_CONVERTED";
+			defines.c += "-D WUHB_CONVERTED ";
 		}
 
 		defines.c += JsonFile.parseJSONVars();
