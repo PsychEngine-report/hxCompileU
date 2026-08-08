@@ -86,7 +86,6 @@ class HaxeCompiler {
 	-D cxx-no-null-warnings
 	-D keep-unused-locals
 	-D keep-useless-exprs
-  # -D cxx_callstack
 	-D wiiu
 	-D cafe
 	-dce no
