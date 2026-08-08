@@ -15,7 +15,7 @@ import src.SlushiUtils;
 import haxe.Resource;
 import src.Main;
 import src.utils.Defines;
-#include "haxe_NativeStackTrace.h"
+
 
 using StringTools;
 
@@ -25,6 +25,7 @@ using StringTools;
  * 
  * Author: Slushi.
  */
+@:headerInclude("haxe_NativeStackTrace.h", true)
 class CafeCompiler {
 	static var jsonFile:JsonStruct = JsonFile.getJson();
 	static var exitCodeNum:Int = 0;
